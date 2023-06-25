@@ -1,0 +1,8 @@
+partner_id,partner_name,gene_name,uniprot_id,genbank_gene_id,genbank_protein_id,hgnc_id,organism,taxonomy_id
+BE0008658,Corticotropin-releasing factor receptor 1,CRHR1,P34998,,,HGNC:2357,Human,9606
+BE0009827,P2 Purinoceptors,LPAR4,Q99677,,,HGNC:4478,Human,9606
+BE0009847,Voltage-gated Potassium Channels,KCNA1,Q09470,L02750,186663,HGNC:6218,Human,9606
+BE0009997,Glutathione peroxidase,GPX5,O75715,AJ005277,3288455,HGNC:4557,Human,9606
+BE0010027,IgG heavy chain,IGHG1,P01857,,,HGNC:5525,Human,9606
+BE0010194,GABA(B) Receptor,GABBR1,Q9UBS5,AJ225028,3892594,HGNC:4070,Human,9606
+BE0008657,Lysosomal protective protein,CTSA,P10619,,,HGNC:9251,Human,9606

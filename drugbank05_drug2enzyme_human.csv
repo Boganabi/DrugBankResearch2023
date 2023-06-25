@@ -1,0 +1,4 @@
+drugbank_id,partner_id,substrate,inducer,inhibitor
+DB08934,BE0008657,1,0,0
+DB09299,BE0008657,1,0,0
+DB14761,BE0008657,1,0,0
