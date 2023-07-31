@@ -29,6 +29,23 @@ dtr = transporters["Drug IDs"]
 dca = carriers["Drug IDs"]
 den = enzymes["Drug IDs"]
 
+# create header
+header = ["Drug ID"]
+for h in ta:
+    header.append(h)
+
+for h in tr:
+    header.append(h)
+
+for h in ca:
+    header.append(h)
+
+for h in en:
+    header.append(h)
+
+# add header to array for csv file
+writeablerows.append(header)
+
 # iterate through all drug IDs
 for i, drug in enumerate(drugIDs):
 
