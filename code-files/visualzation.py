@@ -3,7 +3,14 @@ import seaborn as sns
 import pandas as pd
 
 # Load the CSV file into a DataFrame
-data = pd.read_csv('innerProducts.csv')
+data = pd.read_csv('../csv-files/innerProducts.csv')
+
+approvedRaw = pd.read_csv('../csv-files/drugbank05_drugs.csv')
+approvedRaw = approvedRaw[approvedRaw["approved"] == 1] # drops values that dont have 1 for approved
+
+approvedRaw.head()
+
+data = data[data["drug ID 1"].isin(approvedRaw["drugbank_id"])]
 
 # Display the first few rows of the data
 data.head()

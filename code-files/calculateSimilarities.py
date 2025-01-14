@@ -2,8 +2,15 @@ import numpy as np
 import pandas as pd
 import csv
 
-dfTTCE = pd.read_csv("uniqueTTCEs.csv")
-dfDDI = pd.read_csv("uniqueDDIs.csv")
+dfTTCE = pd.read_csv("../csv-files/uniqueTTCEs.csv")
+dfDDI = pd.read_csv("../csv-files/uniqueDDIs.csv")
+
+# to filter approved drugs
+approvedRaw = pd.read_csv('../csv-files/drugbank05_drugs.csv')
+approvedRaw = approvedRaw[approvedRaw["approved"] == 1] # drops values that dont have 1 for approved
+
+dfTTCE = dfTTCE[dfTTCE["Drug ID"].isin(approvedRaw["drugbank_id"])]
+dfDDI = dfDDI[dfDDI["drugbank_id"].isin(approvedRaw["drugbank_id"])]
 
 # this program will calculate the inner product of all binary vectors in the TTCE csv file
 writeablerows = [ [] ]
@@ -51,6 +58,6 @@ for first, second in zip(ddi1, ddi2):
 print("writing values...")
 
 # write all values to csv file
-with open("innerProducts.csv", "w+") as file:
+with open("../csv-files/approvedInnerProducts.csv", "w", newline='', encoding="utf-8") as file:
     csvWriter = csv.writer(file, delimiter=',')
     csvWriter.writerows(writeablerows)
