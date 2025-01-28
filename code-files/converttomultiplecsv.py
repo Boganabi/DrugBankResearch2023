@@ -32,7 +32,7 @@ try:
     parser = ET.XMLParser(encoding="utf-8")
 
     # specify file location
-    tree = ET.parse('fulldatabase.xml', parser=parser)
+    tree = ET.parse('../csv-files/fulldatabase.xml', parser=parser)
     #context = etree.iterparse(StringIO(data))
 
     root = tree.getroot()
@@ -70,6 +70,9 @@ for child in tqdm(root):
 
     groups = [s.text for s in child.find(tag_prefix+'groups').findall(tag_prefix+'group')]
     drug2attrib[drugbank_id]['groups'] = groups
+
+    description = child.find(tag_prefix+'description').text
+    drug2attrib[drugbank_id]['description'] = description
 
     # Get targets
     drug2attrib[drugbank_id]['targets'] = []
@@ -258,10 +261,10 @@ print (len(drugs), "drugs with at least 1 target/ enzyme/ transporter")
 
 
 #######################################################################
-# Save drug attributes to CSV {'drugname', 'drug_type', 'groups', 'targets/enzymes/transporters': [_id, _actions]}
-outf = open('drugbank05_drugs.csv', 'w', newline='', encoding="utf-8")
+# Save drug attributes to CSV {'drugname', 'drug_type', 'description', 'groups', 'targets/enzymes/transporters': [_id, _actions]}
+outf = open('../csv-files/drugbank05_drugs.csv', 'w', newline='', encoding="utf-8")
 writer = csv.writer(outf)
-writer.writerow(['drugbank_id', 'drugname', 'drug_type', 'approved', 'experimental', 'illicit', 'investigational', 'nutraceutical', 'withdrawn'])
+writer.writerow(['drugbank_id', 'drugname', 'drug_type', 'description', 'approved', 'experimental', 'illicit', 'investigational', 'nutraceutical', 'withdrawn'])
 
 for drugbank_id in tqdm(drugs):
     drugname = drug2attrib[drugbank_id]['drugname']
@@ -272,9 +275,10 @@ for drugbank_id in tqdm(drugs):
             drugname = drugname.replace(u'\u03b1', 'alpha')
         drugname = drugname.encode("utf-8")
     drug_type = drug2attrib[drugbank_id]['drug_type']
+    des = drug2attrib[drugbank_id]['description']
     groups = [1 if group in drug2attrib[drugbank_id]['groups'] else 0 for group in ['approved', 'experimental', 'illicit', 'investigational', 'nutraceutical', 'withdrawn'] ]
     
-    writer.writerow([drugbank_id, drugname, drug_type]+groups)
+    writer.writerow([drugbank_id, drugname, drug_type, des]+groups)
     
 outf.close()
 
@@ -284,8 +288,8 @@ outf.close()
 
 # drugbank_target_id -> #{'gene', 'name', 'organism', 'taxonomy_id', 'uniprot_id', 'genbank_gene_id', 'genbank_protein_id', 'hgnc_id'}
 
-outf = open('drugbank05_partner_protein.csv', 'w', newline='', encoding="utf-8")
-outfh = open('drugbank05_partner_protein_human.csv', 'w', newline='', encoding="utf-8")
+outf = open('../csv-files/drugbank05_partner_protein.csv', 'w', newline='', encoding="utf-8")
+outfh = open('../csv-files/drugbank05_partner_protein_human.csv', 'w', newline='', encoding="utf-8")
 writer = csv.writer(outf)
 writerh = csv.writer(outfh)
 
@@ -386,8 +390,8 @@ outfh.close()
 # transporter [('substrate', 790), ('inducer', 100), ('inhibitor', 1075)]
 
 # Targets
-outf = open('drugbank05_drug2target.csv', 'w', newline='', encoding="utf-8")
-outfh = open('drugbank05_drug2target_human.csv', 'w', newline='', encoding="utf-8")
+outf = open('../csv-files/drugbank05_drug2target.csv', 'w', newline='', encoding="utf-8")
+outfh = open('../csv-files/drugbank05_drug2target_human.csv', 'w', newline='', encoding="utf-8")
 writer = csv.writer(outf)
 writerh = csv.writer(outfh)
 
@@ -409,8 +413,8 @@ outfh.close()
 
 
 # Enzymes
-outf = open('drugbank05_drug2enzyme.csv', 'w', newline='', encoding="utf-8")
-outfh = open('drugbank05_drug2enzyme_human.csv', 'w', newline='', encoding="utf-8")
+outf = open('../csv-files/drugbank05_drug2enzyme.csv', 'w', newline='', encoding="utf-8")
+outfh = open('../csv-files/drugbank05_drug2enzyme_human.csv', 'w', newline='', encoding="utf-8")
 writer = csv.writer(outf)
 writerh = csv.writer(outfh)
 
@@ -432,8 +436,8 @@ outfh.close()
 
 
 # Transporters
-outf = open('drugbank05_drug2transporter.csv', 'w', newline='', encoding="utf-8")
-outfh = open('drugbank05_drug2transporter_human.csv', 'w', newline='', encoding="utf-8")
+outf = open('../csv-files/drugbank05_drug2transporter.csv', 'w', newline='', encoding="utf-8")
+outfh = open('../csv-files/drugbank05_drug2transporter_human.csv', 'w', newline='', encoding="utf-8")
 writer = csv.writer(outf)
 writerh = csv.writer(outfh)
 
